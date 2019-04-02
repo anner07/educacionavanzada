@@ -12,12 +12,14 @@ namespace EducacionAvanzada.WebAdmin.Controllers
         AlumnosBL _alumnosBL;
         GradosBL _gradosBL;
         JornadasBL _jornadasBL;
+        seccionBL _seccionesBL;
 
         public AlumnosController()
         {
             _alumnosBL = new AlumnosBL();
             _gradosBL = new GradosBL();
             _jornadasBL = new JornadasBL();
+            _seccionesBL = new seccionBL();
         }
 
         // GET: Alumnos
@@ -33,9 +35,11 @@ namespace EducacionAvanzada.WebAdmin.Controllers
             var nuevoAlumno = new Alumno();
             var grados = _gradosBL.ObtenerGrados();
             var jornadas = _jornadasBL.ObtenerJornadas();
+            var secciones = _seccionesBL.ObtenerSecciones();
 
             ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion");
             ViewBag.JornadaId = new SelectList(jornadas, "Id", "Descripcion");
+            ViewBag.SeccionId = new SelectList(secciones, "Id", "Descripcion");
 
             return View(nuevoAlumno);
         }
@@ -43,8 +47,13 @@ namespace EducacionAvanzada.WebAdmin.Controllers
         [HttpPost]
         public ActionResult Crear(Alumno alumno, HttpPostedFileBase imagen)
         {
+            string Url = alumno.UrlImagen;
+
             var grados = _gradosBL.ObtenerGrados();
             var jornadas = _jornadasBL.ObtenerJornadas();
+            var secciones = _seccionesBL.ObtenerSecciones();
+
+
 
             if (ModelState.IsValid)
             {
@@ -55,7 +64,7 @@ namespace EducacionAvanzada.WebAdmin.Controllers
                     return View(alumno);
                 }
 
-                if (alumno.GradoId == 0 || alumno.JornadaId == 0)
+                if (alumno.GradoId == 0 || alumno.JornadaId == 0 || alumno.SeccionId == 0)
                 {
                     if (alumno.GradoId == 0)
                     {
@@ -67,9 +76,16 @@ namespace EducacionAvanzada.WebAdmin.Controllers
                         ModelState.AddModelError("Jornada", "Seleccione una Jornada");
                     }
 
-                    bolsaDeVista();
+                    if (alumno.SeccionId == 0)
+                    {
+                        ModelState.AddModelError("seccion", "Seleccione una Sección");
+                    }
+
+                   // bolsaDeVista();
                     ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion");
                     ViewBag.JornadaId = new SelectList(jornadas, "Id", "Descripcion");
+                    ViewBag.SeccionId = new SelectList(secciones, "Id", "Descripcion");
+
 
                     return View(alumno);
                 }
@@ -84,9 +100,16 @@ namespace EducacionAvanzada.WebAdmin.Controllers
                 return RedirectToAction("Index");
             }
 
-           ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion");
+            if (alumno.UrlImagen == null)
+            {
+                alumno.UrlImagen = Url;
+            }
+
+            ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion");
             ViewBag.JornadaId = new SelectList(jornadas, "Id", "Descripcion");
-            bolsaDeVista();
+            ViewBag.SeccionId = new SelectList(secciones, "Id", "Descripcion");
+
+            //bolsaDeVista();
             return View(alumno);
         }
 
@@ -94,9 +117,12 @@ namespace EducacionAvanzada.WebAdmin.Controllers
         {
             var grados = _gradosBL.ObtenerGrados();
             var jornadas = _jornadasBL.ObtenerJornadas();
+            var secciones = _seccionesBL.ObtenerSecciones();
 
             ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion");
             ViewBag.JornadaId = new SelectList(jornadas, "Id", "Descripcion");
+            ViewBag.SeccionId = new SelectList(secciones, "Id", "Descripcion");
+
         }
 
         public ActionResult Editar(int id)
@@ -104,16 +130,21 @@ namespace EducacionAvanzada.WebAdmin.Controllers
             var alumno = _alumnosBL.ObtenerAlumno(id);
             var grados = _gradosBL.ObtenerGrados();
             var jornadas = _jornadasBL.ObtenerJornadas();
+            var secciones = _seccionesBL.ObtenerSecciones();
+
 
             ViewBag.GradoId = new SelectList(grados, "Id", "Descripcion", alumno.GradoId);
             ViewBag.JornadaId = new SelectList(jornadas, "Id", "Descripcion", alumno.JornadaId);
+            ViewBag.SeccionId = new SelectList(secciones, "Id", "Descripcion", alumno.SeccionId);
+
 
             return View(alumno);
         }
 
         [HttpPost]
-        public ActionResult Editar(Alumno alumno)
+        public ActionResult Editar(Alumno alumno, HttpPostedFileBase imagen)
         {
+            string Url = alumno.UrlImagen;
 
             if (ModelState.IsValid)
             {
@@ -141,11 +172,20 @@ namespace EducacionAvanzada.WebAdmin.Controllers
                     return View(alumno);
                 }
 
+                if (imagen != null)
+                {
+                    alumno.UrlImagen = GuardarImagen(imagen);
+                }
+
                 _alumnosBL.GuardarAlumno(alumno);
 
                 return RedirectToAction("Index");
             }
 
+            if (alumno.UrlImagen == null)
+            {
+                alumno.UrlImagen = Url;
+            }
             bolsaDeVista();
             return View(alumno);
         }

@@ -18,6 +18,11 @@ namespace EducacionAvanzada.BL
         public DbSet<Alumno> Alumnos { get; set; }
         public DbSet<Grado> Grados { get; set; }
         public DbSet<Jornada> Jornadas { get; set; }
+        public DbSet<Materia> Materia { get; set; }
+        public DbSet<seccion> Seccion { get; set; }
+        public DbSet<Notas> Notas { get; set; }
+        public DbSet<NotasDetalle> NotasDetalle { get; set; }
     }
+    
 
 }

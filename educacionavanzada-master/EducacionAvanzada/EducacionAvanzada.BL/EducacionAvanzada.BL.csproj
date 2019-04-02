@@ -56,7 +56,15 @@
     <Compile Include="GradosBL.cs" />
     <Compile Include="Jornada.cs" />
     <Compile Include="JornadasBL.cs" />
+    <Compile Include="materia.cs" />
+    <Compile Include="materiaBL.cs" />
+    <Compile Include="Notas.cs" />
+    <Compile Include="NotaBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportesdenotasporalumno.cs" />
+    <Compile Include="reportesdenotasporalumnoBL.cs" />
+    <Compile Include="seccion.cs" />
+    <Compile Include="seccionBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

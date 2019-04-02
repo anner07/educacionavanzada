@@ -36,19 +36,25 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Seccion)
+            @Html.DisplayNameFor(model => model.seccion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Seccion)
+            @Html.DisplayFor(model => model.seccion.Descripcion)
         </dd>
         <dt>
-            @Html.DisplayFor(model => model.UrlImagen)
+            @Html.DisplayNameFor(model => model.UrlImagen)
         </dt>
 
         <dd>
 
             <img src="@Model.UrlImagen" alt="@Model.Nombre" style="width:200px; height: auto; " />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.activo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.activo)
         </dd>
     </dl>
 

@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 namespace EducacionAvanzada.BL
 {
     public class Alumno
-    {
+    {  public Alumno()
+        {
+
+            activo = true;
+        }
         
         public int Id { get; set; }
 
@@ -21,12 +25,24 @@ namespace EducacionAvanzada.BL
         public Grado Grado { get; set; }
         public int JornadaId { get; set; }
         public Jornada Jornada { get; set; }
+        public bool activo { get; set; }
 
-        [Required(ErrorMessage = "Ingrese una sección")]
-        public string Seccion { get; set; }
+
+        public int PrimerParcial { get; set; }
+        public int SegundoParcial { get; set; }
+        public int TercerParcial { get; set; }
+        public int CuartoParcial { get; set; }
+        public int NotaFinal { get; set; }
+
+        public int SeccionId { get; set; }
+        [Display(Name = "Sección")]
+        public seccion seccion { get; set; }
 
         [Display (Name= "Imagen")]
         public string UrlImagen { get; set; }
+
+
+        
 
     }
 }

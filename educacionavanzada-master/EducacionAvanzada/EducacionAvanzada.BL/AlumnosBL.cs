@@ -23,10 +23,25 @@ namespace EducacionAvanzada.BL
             ListadeAlumnos = _contexto.Alumnos
                 .Include("Grado")
                 .Include("Jornada")
+                .Include("Seccion")
+                .OrderBy(a=>a.Nombre)
                 .ToList();
 
             return ListadeAlumnos;
         }
+        public List<Alumno> ObtenerAlumnosactivo()
+        {
+            ListadeAlumnos = _contexto.Alumnos
+                .Include("Grado")
+                .Include("Jornada")
+                .Include("Seccion")
+                .Where(a => a.activo == true)
+                .OrderBy(a => a.Nombre)
+                .ToList();
+
+            return ListadeAlumnos;
+        }
+
 
         public void GuardarAlumno(Alumno alumno)
         {
@@ -40,8 +55,14 @@ namespace EducacionAvanzada.BL
                 alumnoExistente.Nombre = alumno.Nombre;
                 alumnoExistente.GradoId = alumno.GradoId;
                 alumnoExistente.JornadaId = alumno.JornadaId;
-                alumnoExistente.Seccion = alumno.Seccion;
-                alumnoExistente.UrlImagen = alumno.UrlImagen;
+                alumnoExistente.SeccionId = alumno.SeccionId;
+                alumnoExistente.activo = alumno.activo;
+                if (alumno.UrlImagen != null)
+                {
+                    alumnoExistente.UrlImagen = alumno.UrlImagen;
+
+                }
+
             }
 
             _contexto.SaveChanges();
@@ -54,6 +75,7 @@ namespace EducacionAvanzada.BL
             var alumno = _contexto.Alumnos
                 .Include("Grado")
                 .Include("Jornada")
+                .Include("Seccion")
                 .FirstOrDefault(p => p.Id == id);
 
             return alumno;

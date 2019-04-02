@@ -21,10 +21,13 @@
             @Html.DisplayNameFor(model => model.Jornada)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Seccion)
+            @Html.DisplayNameFor(model => model.seccion)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.UrlImagen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.activo)
         </th>
         <th></th>
     </tr>
@@ -41,10 +44,13 @@
             @Html.DisplayFor(modelItem => item.Jornada.Descripcion)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Seccion)
+            @Html.DisplayFor(modelItem => item.seccion.Descripcion)
         </td>
         <td>
             <img src="@item.UrlImagen" alt="@item.Nombre" style="width:64px; height: auto; " />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.activo)
         </td>
         <td>
 

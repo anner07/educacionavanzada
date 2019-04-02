@@ -35,23 +35,30 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Seccion)
+            Sección
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Seccion)
+            @Html.DisplayFor(model => model.seccion.Descripcion)
         </dd>
         <dt>
-            @Html.DisplayFor(model => model.UrlImagen)
+            @Html.DisplayNameFor(model => model.UrlImagen)
         </dt>
 
         <dd>
 
             <img src="@Model.UrlImagen" alt="@Model.Nombre" style="width:200px; height: auto; " />
+          </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.activo)
         </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Editar", "Editar", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar a Lista de Alumnos", "Index")
 </p>
